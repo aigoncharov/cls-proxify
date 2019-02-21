@@ -1,0 +1,11 @@
+{
+  "*.{js,ts,tsx,json,css,less,yml}": [
+    "npx prettier --write",
+    "git add"
+  ],
+  "*.md": [
+    "npx doctoc",
+    "npx prettier --write",
+    "git add"
+  ]
+}
