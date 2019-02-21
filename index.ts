@@ -7,7 +7,7 @@ export const setClsProxy = <T extends object>(clsKey: string, proxy: T) => clsNa
 export const getClsProxy = <T extends object>(clsKey: string): T | undefined => clsNamespace.get(clsKey)
 
 export const clsProxify = <T extends object>(clsKey: string, targetToProxify: T) => {
-  const proxified = new Proxy(targetToProxify as object, {
+  const proxified = new Proxy(targetToProxify, {
     get(target, property, receiver) {
       target = getClsProxy(clsKey) || target
       return Reflect.get(target, property, receiver)
@@ -27,6 +27,10 @@ export const clsProxify = <T extends object>(clsKey: string, targetToProxify: T)
     ownKeys(target) {
       target = getClsProxy(clsKey) || target
       return Reflect.ownKeys(target)
+    },
+    getOwnPropertyDescriptor(target, key) {
+      target = getClsProxy(clsKey) || target
+      return Reflect.getOwnPropertyDescriptor(target, key)
     },
   })
   return proxified
