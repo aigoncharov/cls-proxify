@@ -13,6 +13,8 @@ Many thanks to [@mcollina](https://github.com/mcollina) for the idea of combinin
   - [Koa](#koa)
   - [Fastify](#fastify)
   - [Any other framework or library](#any-other-framework-or-library)
+- [Live demos](#live-demos)
+  - [Usage with pino and fastify](#usage-with-pino-and-fastify)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -166,3 +168,7 @@ app.get('/test', (req, res) => {
   // If it doesn't find anything in CLS by key 'clsKeyLogger' it uses the original `logger` and logs 'My message!'
 })
 ```
+
+## Live demos
+
+#### [Usage with pino and fastify](https://repl.it/repls/EnragedFrillyCoordinates)
