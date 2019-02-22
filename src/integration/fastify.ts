@@ -1,7 +1,7 @@
 import { EventEmitter } from 'events'
 import { IncomingMessage, ServerResponse } from 'http'
 
-import { clsNamespace, setClsProxyValue } from '../core'
+import { clsProxifyNamespace, setClsProxyValue } from '../core'
 
 export type CreateClsProxyFastify<HttpRequest, HttpResponse> = (req: HttpRequest, response: HttpResponse) => any
 export const clsProxifyFastifyMiddleware = <
@@ -11,10 +11,10 @@ export const clsProxifyFastifyMiddleware = <
   clsKey: string,
   createClsProxy: CreateClsProxyFastify<HttpRequest, HttpResponse>,
 ) => (req: HttpRequest, res: HttpResponse, next: (err?: Error) => void) => {
-  clsNamespace.bindEmitter(req)
-  clsNamespace.bindEmitter(res)
+  clsProxifyNamespace.bindEmitter(req)
+  clsProxifyNamespace.bindEmitter(res)
 
-  clsNamespace.run(() => {
+  clsProxifyNamespace.run(() => {
     const proxyValue = createClsProxy(req, res)
     setClsProxyValue(clsKey, proxyValue)
 

@@ -1,6 +1,6 @@
 import 'cls-hooked'
 
-import { clsNamespace, clsProxify, getClsProxyValue, setClsProxyValue } from './core'
+import { clsProxify, clsProxifyNamespace, getClsProxyValue, setClsProxyValue } from './core'
 
 describe('getClsProxyValue and setClsProxyValue', () => {
   test('sets a value in cls and gets it back', () => {
@@ -9,7 +9,7 @@ describe('getClsProxyValue and setClsProxyValue', () => {
     const testVal = {
       prop: Symbol(),
     }
-    clsNamespace.run(() => {
+    clsProxifyNamespace.run(() => {
       setClsProxyValue(testKey, testVal)
       const clsVal = getClsProxyValue(testKey)
       expect(clsVal).toBe(testVal)
@@ -46,13 +46,13 @@ describe('clsProxify', () => {
     })
 
     test('uses value from cls', () => {
-      clsNamespace.run(() => {
+      clsProxifyNamespace.run(() => {
         setClsProxyValue(clsKey, proxy)
         expect(proxified.prop).toBe(proxy.prop)
       })
     })
     test('falls back to original', () => {
-      clsNamespace.run(() => {
+      clsProxifyNamespace.run(() => {
         expect(proxified.prop).toBe(original.prop)
       })
     })
@@ -71,13 +71,13 @@ describe('clsProxify', () => {
     })
 
     test('uses value from cls', () => {
-      clsNamespace.run(() => {
+      clsProxifyNamespace.run(() => {
         setClsProxyValue(clsKey, proxy)
         expect(proxified()).toBe(proxy())
       })
     })
     test('falls back to original', () => {
-      clsNamespace.run(() => {
+      clsProxifyNamespace.run(() => {
         expect(proxified()).toBe(original())
       })
     })
@@ -97,14 +97,14 @@ describe('clsProxify', () => {
     })
 
     test('uses value from cls', () => {
-      clsNamespace.run(() => {
+      clsProxifyNamespace.run(() => {
         setClsProxyValue(clsKey, proxy)
         expect(new proxified()).toBeInstanceOf(proxy)
         expect(new proxified()).not.toBeInstanceOf(original)
       })
     })
     test('falls back to original', () => {
-      clsNamespace.run(() => {
+      clsProxifyNamespace.run(() => {
         expect(new proxified()).toBeInstanceOf(original)
         expect(new proxified()).not.toBeInstanceOf(proxy)
       })
@@ -129,14 +129,14 @@ describe('clsProxify', () => {
     })
 
     test('uses value from cls', () => {
-      clsNamespace.run(() => {
+      clsProxifyNamespace.run(() => {
         setClsProxyValue(clsKey, proxy)
         expect(objKey2 in proxified).toBeTruthy()
         expect(objKey1 in proxified).toBeFalsy()
       })
     })
     test('falls back to original', () => {
-      clsNamespace.run(() => {
+      clsProxifyNamespace.run(() => {
         expect(objKey1 in proxified).toBeTruthy()
         expect(objKey2 in proxified).toBeFalsy()
       })
@@ -162,14 +162,14 @@ describe('clsProxify', () => {
     })
 
     test('uses value from cls', () => {
-      clsNamespace.run(() => {
+      clsProxifyNamespace.run(() => {
         setClsProxyValue(clsKey, proxy)
         expect(Object.keys(proxified)).toEqual(Object.keys(proxy))
         expect(Object.keys(proxified).length).toBe(3)
       })
     })
     test('falls back to original', () => {
-      clsNamespace.run(() => {
+      clsProxifyNamespace.run(() => {
         expect(Object.keys(proxified)).toEqual(Object.keys(original))
         expect(Object.keys(proxified).length).toBe(2)
       })

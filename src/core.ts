@@ -1,10 +1,10 @@
 import { createNamespace } from 'cls-hooked'
 
-export const clsNamespaceName = 'clsProxifyNamespace'
-export const clsNamespace = createNamespace(clsNamespaceName)
+export const clsProxifyNamespaceName = 'clsProxifyNamespace'
+export const clsProxifyNamespace = createNamespace(clsProxifyNamespaceName)
 
-export const setClsProxyValue = <T extends object>(clsKey: string, proxy: T) => clsNamespace.set(clsKey, proxy)
-export const getClsProxyValue = <T extends object>(clsKey: string): T | undefined => clsNamespace.get(clsKey)
+export const setClsProxyValue = <T extends object>(clsKey: string, proxy: T) => clsProxifyNamespace.set(clsKey, proxy)
+export const getClsProxyValue = <T extends object>(clsKey: string): T | undefined => clsProxifyNamespace.get(clsKey)
 
 export const clsProxify = <T extends object>(clsKey: string, targetToProxify: T) => {
   const proxified = new Proxy(targetToProxify, {
