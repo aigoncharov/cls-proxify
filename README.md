@@ -1,23 +1,20 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-**Table of Contents** _generated with [DocToc](https://github.com/thlorenz/doctoc)_
-
-- [cls-proxify \*](#cls-proxify-)
-  - [Installation](#installation)
-  - [Quick start](#quick-start)
-    - [Express](#express)
-    - [Koa](#koa)
-    - [Fastify](#fastify)
-    - [Any other framework or library](#any-other-framework-or-library)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
 # cls-proxify [![Build Status](https://travis-ci.org/keenondrums/cls-proxify.svg?branch=master)](https://travis-ci.org/keenondrums/cls-proxify)
 
 A small library that proxies any arbitrary object with a proxy from [CLS](https://github.com/jeff-lewis/cls-hooked) if found one. Super-useful for creating child loggers per each request with dynamic context from the request itself (e.g., adding request trace ID, adding request payload). Integrated with [express](https://github.com/expressjs/express), [koa](https://github.com/koajs/koa), [fastify](https://github.com/fastify/fastify) out-of-the-box.
 
 Many thanks to [@mcollina](https://github.com/mcollina) for the idea of combining [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) and [CLS](https://github.com/jeff-lewis/cls-hooked).
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [Installation](#installation)
+- [Quick start](#quick-start)
+  - [Express](#express)
+  - [Koa](#koa)
+  - [Fastify](#fastify)
+  - [Any other framework or library](#any-other-framework-or-library)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Installation
 

@@ -1,7 +1,7 @@
 {
   "name": "cls-proxify",
   "version": "1.0.0",
-  "description": "",
+  "description": "Proxy any arbitrary object with a proxy from CLS. Integrated with express, koa, fastify. Super-useful for logging.",
   "main": "dist/index.js",
   "dependencies": {},
   "devDependencies": {
@@ -45,5 +45,14 @@
   "bugs": {
     "url": "https://github.com/keenondrums/cls-proxify/issues"
   },
-  "homepage": "https://github.com/keenondrums/cls-proxify#readme"
+  "homepage": "https://github.com/keenondrums/cls-proxify#readme",
+  "keywords": [
+    "cls",
+    "proxy",
+    "tracing",
+    "trace id",
+    "cls replace",
+    "logging",
+    "log"
+  ]
 }
