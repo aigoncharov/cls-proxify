@@ -19,7 +19,7 @@ Many thanks to [@mcollina](https://github.com/mcollina) for the idea of combinin
 ## Installation
 
 ```
-npm i cls-proxify
+npm i cls-proxify cls-hooked
 ```
 
 ## Quick start
