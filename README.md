@@ -33,9 +33,10 @@ import { clsProxify } from 'cls-proxify'
 import { clsProxifyExpressMiddleware } from 'cls-proxify/integration/express'
 import * as express from 'express'
 
-const logger = clsProxify('clsKeyLogger', {
+const logger = {
   info: (msg: string) => console.log(msg),
-})
+}
+const loggerCls = clsProxify('clsKeyLogger', logger)
 
 const app = express()
 app.use(
@@ -45,17 +46,17 @@ app.use(
       info: (msg: string) => `${headerRequestID}: ${msg}`,
     }
     // this value will be accesible in CLS by key 'clsKeyLogger'
-    // it will be used as a proxy for `logger`
+    // it will be used as a proxy for `loggerCls`
     return loggerProxy
   }),
 )
 
 app.get('/test', (req, res) => {
-  logger.info('My message!')
+  loggerCls.info('My message!')
   // Logs `${headerRequestID}: My message!` into the console
   // Say, we send GET /test with header 'Traceparent' set to 12345
   // It's going to log '12345: My message!'
-  // If it doesn't find anything in CLS by key 'clsKeyLogger' it uses the original logger and logs 'My message!'
+  // If it doesn't find anything in CLS by key 'clsKeyLogger' it uses the original `logger` and logs 'My message!'
 })
 ```
 
@@ -68,9 +69,10 @@ import { clsProxify } from 'cls-proxify'
 import { clsProxifyKoaMiddleware } from 'cls-proxify/integration/koa'
 import * as Koa from 'koa'
 
-const logger = clsProxify('clsKeyLogger', {
+const logger = {
   info: (msg: string) => console.log(msg),
-})
+}
+const loggerCls = clsProxify('clsKeyLogger', logger)
 
 const app = new Koa()
 app.use(
@@ -80,17 +82,17 @@ app.use(
       info: (msg: string) => `${headerRequestID}: ${msg}`,
     }
     // this value will be accesible in CLS by key 'clsKeyLogger'
-    // it will be used as a proxy for `logger`
+    // it will be used as a proxy for `loggerCls`
     return loggerProxy
   }),
 )
 
 app.use((ctx) => {
-  logger.info('My message!')
+  loggerCls.info('My message!')
   // Logs `${headerRequestID}: My message!` into the console
   // Say, we send GET / with header 'Traceparent' set to 12345
   // It's going to log '12345: My message!'
-  // If it doesn't find anything in CLS by key 'clsKeyLogger' it uses the original logger and logs 'My message!'
+  // If it doesn't find anything in CLS by key 'clsKeyLogger' it uses the original `logger` and logs 'My message!'
 })
 ```
 
@@ -101,9 +103,10 @@ import { clsProxify } from 'cls-proxify'
 import { clsProxifyFastifyMiddleware } from 'cls-proxify/integration/fastify'
 import * as fastify from 'fastify'
 
-const logger = clsProxify('clsKeyLogger', {
+const logger = {
   info: (msg: string) => console.log(msg),
-})
+}
+const loggerCls = clsProxify('clsKeyLogger', logger)
 
 const app = fastify()
 app.use(
@@ -113,17 +116,17 @@ app.use(
       info: (msg: string) => `${headerRequestID}: ${msg}`,
     }
     // this value will be accesible in CLS by key 'clsKeyLogger'
-    // it will be used as a proxy for `logger`
+    // it will be used as a proxy for `loggerCls`
     return loggerProxy
   }),
 )
 
 app.get('/test', (req, res) => {
-  logger.info('My message!')
+  loggerCls.info('My message!')
   // Logs `${headerRequestID}: My message!` into the console
   // Say, we send GET /test with header 'Traceparent' set to 12345
   // It's going to log '12345: My message!'
-  // If it doesn't find anything in CLS by key 'clsKeyLogger' it uses the original logger and logs 'My message!'
+  // If it doesn't find anything in CLS by key 'clsKeyLogger' it uses the original `logger` and logs 'My message!'
 })
 ```
 
@@ -134,9 +137,10 @@ import { clsProxify, clsProxifyNamespace } from 'cls-proxify'
 import { clsProxifyFastifyMiddleware } from 'cls-proxify/integration/fastify'
 import AbstractWebServer from 'abstract-web-server'
 
-const logger = clsProxify('clsKeyLogger', {
+const logger = {
   info: (msg: string) => console.log(msg),
-})
+}
+const loggerCls = clsProxify('clsKeyLogger', logger)
 
 const app = new AbstractWebServer()
 // Assuming this AbstractWebServer supports some form of middlewares
@@ -144,7 +148,7 @@ app.use((request, response, next) => {
   clsProxifyNamespace.run(() => {
     const headerRequestID = request.headers.Traceparent
     // this value will be accesible in CLS by key 'clsKeyLogger'
-    // it will be used as a proxy for `logger`
+    // it will be used as a proxy for `loggerCls`
     const loggerProxy = {
       info: (msg: string) => `${headerRequestID}: ${msg}`,
     }
@@ -155,10 +159,10 @@ app.use((request, response, next) => {
 })
 
 app.get('/test', (req, res) => {
-  logger.info('My message!')
+  loggerCls.info('My message!')
   // Logs `${headerRequestID}: My message!` into the console
   // Say, we send GET /test with header 'Traceparent' set to 12345
   // It's going to log '12345: My message!'
-  // If it doesn't find anything in CLS by key 'clsKeyLogger' it uses the original logger and logs 'My message!'
+  // If it doesn't find anything in CLS by key 'clsKeyLogger' it uses the original `logger` and logs 'My message!'
 })
 ```

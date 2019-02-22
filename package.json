@@ -1,8 +1,8 @@
 {
   "name": "cls-proxify",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Proxy any arbitrary object with a proxy from CLS. Integrated with express, koa, fastify. Super-useful for logging.",
-  "main": "dist/index.js",
+  "main": "core.js",
   "dependencies": {},
   "devDependencies": {
     "@types/cls-hooked": "^4.2.1",
