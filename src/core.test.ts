@@ -1,6 +1,6 @@
 import 'cls-hooked'
 
-import { clsNamespace, clsProxify, getClsProxyValue, setClsProxyValue } from './index'
+import { clsNamespace, clsProxify, getClsProxyValue, setClsProxyValue } from './core'
 
 describe('getClsProxyValue and setClsProxyValue', () => {
   test('sets a value in cls and gets it back', () => {
