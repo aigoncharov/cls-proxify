@@ -1,4 +1,4 @@
-# cls-proxify [![Build Status](https://travis-ci.org/keenondrums/cls-proxify.svg?branch=master)](https://travis-ci.org/keenondrums/cls-proxify)
+# cls-proxify [![Build Status](https://travis-ci.org/keenondrums/cls-proxify.svg?branch=master)](https://travis-ci.org/keenondrums/cls-proxify) [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=A%20small%20library%20that%20proxies%20any%20arbitrary%20object%20with%20a%20proxy%20from%20CLS.%20Super-useful%20for%20logging.&url=https://github.com/keenondrums/cls-proxify&hashtags=javascript,library,nodejs,cls,proxy,logging)
 
 A small library that proxies any arbitrary object with a proxy from [CLS](https://github.com/jeff-lewis/cls-hooked) if found one. Super-useful for creating child loggers per each request with dynamic context from the request itself (e.g., adding request trace ID, adding request payload). Integrated with [express](https://github.com/expressjs/express), [koa](https://github.com/koajs/koa), [fastify](https://github.com/fastify/fastify) out-of-the-box.
 
