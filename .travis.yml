@@ -5,3 +5,5 @@ script:
   - npm run lint
   - npm test
 sudo: false
+after_success:
+  - npm run coverage-report
