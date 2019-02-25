@@ -18,6 +18,7 @@ Many thanks to [@mcollina](https://github.com/mcollina) for the idea of combinin
   - [Does it work only for loggers?](#does-it-work-only-for-loggers)
 - [Live demos](#live-demos)
   - [Usage with pino and fastify](#usage-with-pino-and-fastify)
+  - [Usage with pino and express](#usage-with-pino-and-express)
 - [Troubleshooting](#troubleshooting)
   - [My context got lost](#my-context-got-lost)
   - [I'm experiencing a memory leak](#im-experiencing-a-memory-leak)
@@ -205,7 +206,9 @@ Take a look at [the tests](https://github.com/keenondrums/cls-proxify/blob/maste
 
 ## Live demos
 
-#### [Usage with pino and fastify](https://repl.it/repls/EnragedFrillyCoordinates)
+#### [Usage with pino and fastify](https://repl.it/@keenondrums/cls-proxify-pino-fastify)
+
+#### [Usage with pino and express](https://repl.it/@keenondrums/cls-proxify-pino-express)
 
 ## Troubleshooting
 
