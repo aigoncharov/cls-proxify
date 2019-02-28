@@ -1,7 +1,7 @@
 {
   "name": "cls-proxify",
   "version": "1.0.1",
-  "description": "Proxy any arbitrary object with a proxy from CLS. Integrated with express, koa, fastify. Super-useful for logging.",
+  "description": "Logging on steroids with CLS and Proxy. Integrated with express, koa, fastify.",
   "main": "core.js",
   "dependencies": {},
   "devDependencies": {
