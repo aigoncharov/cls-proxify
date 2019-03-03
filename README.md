@@ -186,7 +186,9 @@ app.get('/test', (req, res) => {
 
 > If you're struggling to grasp the idea behind CLS at these two articles: [Request Id Tracing in Node.js Applications](https://itnext.io/request-id-tracing-in-node-js-applications-c517c7dab62d), [A Pragmatic Overview of Async Hooks API in Node.js](https://itnext.io/a-pragmatic-overview-of-async-hooks-api-in-node-js-e514b31460e9).
 
-We wrap our original logger in a [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy). Every time we try to access any property of that object we first check if there's an updated logger in CLS available. If it's there we take the property from it. If it's not we take the property from the original logger. Then for every request we create a CLS context using `run` and `bindEmitter`. Once the context is created we put an updated in it. Once we try to call any method of our logger we'll actually call the same method on our logger in CLS.
+> Take a look at [this article which overviews how CLS works and covers the idea behind this library](https://itnext.io/nodejs-logging-made-right-117a19e8b4ce).
+
+We wrap our original logger in a [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy). Every time we try to access any property of that object we first check if there's an updated logger in CLS available. If it's there we take the property from it. If it's not we take the property from the original logger. Then for every request we create a CLS context using `run` and `bindEmitter`. Once the context is created we enhance our original logger with some extra data and put the updated logger in the context. Once we try to call any method of our logger we'll actually call the same method on our logger in CLS.
 
 ![](docs/how-cls-proxify-works.jpg)
 
