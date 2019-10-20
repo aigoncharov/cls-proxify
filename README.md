@@ -1,4 +1,4 @@
-# cls-proxify [![Build Status](https://travis-ci.org/keenondrums/cls-proxify.svg?branch=master)](https://travis-ci.org/keenondrums/cls-proxify) [![Coverage Status](https://coveralls.io/repos/github/keenondrums/cls-proxify/badge.svg?branch=master)](https://coveralls.io/github/keenondrums/cls-proxify?branch=master) [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=A%20small%20library%20that%20proxies%20any%20arbitrary%20object%20with%20a%20proxy%20from%20CLS.%20Super-useful%20for%20logging.&url=https://github.com/keenondrums/cls-proxify&hashtags=javascript,library,nodejs,cls,proxy,logging)
+# cls-proxify [![Build Status](https://travis-ci.org/aigoncharov/cls-proxify.svg?branch=master)](https://travis-ci.org/keenondrums/cls-proxify) [![Coverage Status](https://coveralls.io/repos/github/aigoncharov/cls-proxify/badge.svg?branch=master)](https://coveralls.io/github/keenondrums/cls-proxify?branch=master) [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=A%20small%20library%20that%20proxies%20any%20arbitrary%20object%20with%20a%20proxy%20from%20CLS.%20Super-useful%20for%20logging.&url=https://github.com/aigoncharov/cls-proxify&hashtags=javascript,library,nodejs,cls,proxy,logging)
 
 Logging on steroids with CLS and Proxy. A small library that proxies any arbitrary object with a proxy from [Continuation-Local Storage a.k.a. CLS](https://github.com/jeff-lewis/cls-hooked) if found one. Super-useful for creating child loggers per each request with dynamic context from the request itself (e.g. adding request trace ID, adding request payload). Integrated with [express](https://github.com/expressjs/express), [koa](https://github.com/koajs/koa), [fastify](https://github.com/fastify/fastify) out-of-the-box.
 
@@ -209,9 +209,9 @@ Take a look at [the tests](https://github.com/keenondrums/cls-proxify/blob/maste
 
 ## Live demos
 
-#### [Usage with pino and fastify](https://repl.it/@keenondrums/cls-proxify-pino-fastify)
+#### [Usage with pino and fastify](https://repl.it/@aigoncharov/cls-proxify-pino-fastify)
 
-#### [Usage with pino and express](https://repl.it/@keenondrums/cls-proxify-pino-express)
+#### [Usage with pino and express](https://repl.it/@aigoncharov/cls-proxify-pino-express)
 
 ## Troubleshooting
 
