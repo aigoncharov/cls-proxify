@@ -143,7 +143,6 @@ app.get('/test', (req, res) => {
 
 ```ts
 import { clsProxify, clsProxifyNamespace } from 'cls-proxify'
-import { clsProxifyFastifyMiddleware } from 'cls-proxify/integration/fastify'
 import AbstractWebServer from 'abstract-web-server'
 
 const logger = {
