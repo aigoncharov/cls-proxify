@@ -37,7 +37,7 @@
     "test": "npx jest",
     "compile": "npx tsc -p ./tsconfig.prod.json",
     "lint": "npx tsc -p ./tsconfig.json --noEmit && npx tslint -c ./tslint.json -p ./tsconfig.json",
-    "prepack": "npm run compile",
+    "prepack": "npm run compile && cp ./dist/src/**/*.js .",
     "coverage-report": "npx shx cat coverage/lcov.info | coveralls"
   },
   "repository": {
