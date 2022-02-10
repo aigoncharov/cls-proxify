@@ -1,19 +1,19 @@
 import { Request, RequestHandler, Response } from 'express'
 
-import { clsProxifyNamespace, setClsProxyValue } from '../core'
+import { getClsHookedStorage } from '../cls'
 
 export type CreateClsProxyExpress = (req: Request, response: Response) => any
-export const clsProxifyExpressMiddleware = (clsKey: string, createClsProxy: CreateClsProxyExpress): RequestHandler => (
+export const clsProxifyExpressMiddleware = (createClsProxy: CreateClsProxyExpress): RequestHandler => (
   req,
   res,
   next,
 ) => {
-  clsProxifyNamespace.bindEmitter(req)
-  clsProxifyNamespace.bindEmitter(res)
+  getClsHookedStorage().namespace.bindEmitter(req)
+  getClsHookedStorage().namespace.bindEmitter(res)
 
-  clsProxifyNamespace.run(() => {
+  getClsHookedStorage().namespace.run(() => {
     const proxyValue = createClsProxy(req, res)
-    setClsProxyValue(clsKey, proxyValue)
+    getClsHookedStorage().set(proxyValue)
 
     next()
   })

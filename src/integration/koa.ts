@@ -1,18 +1,15 @@
 import { Context, Middleware } from 'koa'
 
-import { clsProxifyNamespace, setClsProxyValue } from '../core'
+import { getClsHookedStorage } from '../cls'
 
 export type CreateClsProxyKoa = (ctx: Context) => any
-export const clsProxifyKoaMiddleware = (clsKey: string, createClsProxy: CreateClsProxyKoa): Middleware => async (
-  ctx,
-  next,
-) => {
-  clsProxifyNamespace.bindEmitter(ctx.req)
-  clsProxifyNamespace.bindEmitter(ctx.res)
+export const clsProxifyKoaMiddleware = (createClsProxy: CreateClsProxyKoa): Middleware => async (ctx, next) => {
+  getClsHookedStorage().namespace.bindEmitter(ctx.req)
+  getClsHookedStorage().namespace.bindEmitter(ctx.res)
 
-  await clsProxifyNamespace.runPromise(() => {
+  await getClsHookedStorage().namespace.runPromise(() => {
     const proxyValue = createClsProxy(ctx)
-    setClsProxyValue(clsKey, proxyValue)
+    getClsHookedStorage().set(proxyValue)
     return next()
   })
 }

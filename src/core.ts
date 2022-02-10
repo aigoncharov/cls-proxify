@@ -1,35 +1,29 @@
-import { createNamespace } from 'cls-hooked'
+import { getClsHookedStorage } from './cls'
 
-export const clsProxifyNamespaceName = 'clsProxifyNamespace'
-export const clsProxifyNamespace = createNamespace(clsProxifyNamespaceName)
-
-export const setClsProxyValue = <T extends object>(clsKey: string, proxy: T) => clsProxifyNamespace.set(clsKey, proxy)
-export const getClsProxyValue = <T extends object>(clsKey: string): T | undefined => clsProxifyNamespace.get(clsKey)
-
-export const clsProxify = <T extends object>(clsKey: string, targetToProxify: T) => {
+export const clsProxify = <T extends object>(targetToProxify: T) => {
   const proxified = new Proxy(targetToProxify, {
     get(target, property, receiver) {
-      target = getClsProxyValue(clsKey) || target
+      target = getClsHookedStorage().get() || target
       return Reflect.get(target, property, receiver)
     },
     apply(target, thisArg, args) {
-      target = getClsProxyValue(clsKey) || target
+      target = getClsHookedStorage().get() || target
       return Reflect.apply(target as () => any, thisArg, args)
     },
     construct(target, args) {
-      target = getClsProxyValue(clsKey) || target
+      target = getClsHookedStorage().get() || target
       return Reflect.construct(target as new () => any, args)
     },
     has(target, key) {
-      target = getClsProxyValue(clsKey) || target
+      target = getClsHookedStorage().get() || target
       return Reflect.has(target, key)
     },
     ownKeys(target) {
-      target = getClsProxyValue(clsKey) || target
+      target = getClsHookedStorage().get() || target
       return Reflect.ownKeys(target)
     },
     getOwnPropertyDescriptor(target, key) {
-      target = getClsProxyValue(clsKey) || target
+      target = getClsHookedStorage().get() || target
       return Reflect.getOwnPropertyDescriptor(target, key)
     },
   })

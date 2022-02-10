@@ -1,34 +1,10 @@
 import 'cls-hooked'
+import { getClsHookedStorage } from './cls'
 
-import { clsProxify, clsProxifyNamespace, getClsProxyValue, setClsProxyValue } from './core'
-
-describe('getClsProxyValue and setClsProxyValue', () => {
-  test('sets a value in cls and gets it back', () => {
-    const testKey = 'test'
-    const differentKey = 'test1'
-    const testVal = {
-      prop: Symbol(),
-    }
-    clsProxifyNamespace.run(() => {
-      setClsProxyValue(testKey, testVal)
-      const clsVal = getClsProxyValue(testKey)
-      expect(clsVal).toBe(testVal)
-      const invalidKeyVal = getClsProxyValue(differentKey)
-      expect(invalidKeyVal).toBeUndefined()
-    })
-  })
-  test('throws if no cls context found', () => {
-    const testKey = 'test'
-    const testVal = {
-      prop: Symbol(),
-    }
-    expect(() => setClsProxyValue(testKey, testVal)).toThrow()
-  })
-})
+import { clsProxify } from './core'
 
 describe('clsProxify', () => {
   describe('get', () => {
-    const clsKey = 'test'
     interface ITestObj {
       prop: symbol
     }
@@ -42,24 +18,23 @@ describe('clsProxify', () => {
       proxy = {
         prop: Symbol(),
       }
-      proxified = clsProxify(clsKey, original)
+      proxified = clsProxify(original)
     })
 
     test('uses value from cls', () => {
-      clsProxifyNamespace.run(() => {
-        setClsProxyValue(clsKey, proxy)
+      getClsHookedStorage().namespace.run(() => {
+        getClsHookedStorage().set(proxy)
         expect(proxified.prop).toBe(proxy.prop)
       })
     })
     test('falls back to original', () => {
-      clsProxifyNamespace.run(() => {
+      getClsHookedStorage().namespace.run(() => {
         expect(proxified.prop).toBe(original.prop)
       })
     })
   })
 
   describe('apply', () => {
-    const clsKey = 'test'
     type TestFn = () => number
     let original!: TestFn
     let proxy!: TestFn
@@ -67,17 +42,17 @@ describe('clsProxify', () => {
     beforeEach(() => {
       original = () => 10
       proxy = () => 20
-      proxified = clsProxify(clsKey, original)
+      proxified = clsProxify(original)
     })
 
     test('uses value from cls', () => {
-      clsProxifyNamespace.run(() => {
-        setClsProxyValue(clsKey, proxy)
+      getClsHookedStorage().namespace.run(() => {
+        getClsHookedStorage().set(proxy)
         expect(proxified()).toBe(proxy())
       })
     })
     test('falls back to original', () => {
-      clsProxifyNamespace.run(() => {
+      getClsHookedStorage().namespace.run(() => {
         expect(proxified()).toBe(original())
       })
     })
@@ -85,7 +60,6 @@ describe('clsProxify', () => {
 
   // tslint:disable max-classes-per-file
   describe('construct', () => {
-    const clsKey = 'test'
     type TestClass = new () => object
     let original!: TestClass
     let proxy!: TestClass
@@ -93,18 +67,18 @@ describe('clsProxify', () => {
     beforeEach(() => {
       original = class {}
       proxy = class {}
-      proxified = clsProxify(clsKey, original)
+      proxified = clsProxify(original)
     })
 
     test('uses value from cls', () => {
-      clsProxifyNamespace.run(() => {
-        setClsProxyValue(clsKey, proxy)
+      getClsHookedStorage().namespace.run(() => {
+        getClsHookedStorage().set(proxy)
         expect(new proxified()).toBeInstanceOf(proxy)
         expect(new proxified()).not.toBeInstanceOf(original)
       })
     })
     test('falls back to original', () => {
-      clsProxifyNamespace.run(() => {
+      getClsHookedStorage().namespace.run(() => {
         expect(new proxified()).toBeInstanceOf(original)
         expect(new proxified()).not.toBeInstanceOf(proxy)
       })
@@ -112,7 +86,6 @@ describe('clsProxify', () => {
   })
 
   describe('has', () => {
-    const clsKey = 'test'
     const objKey1 = 'objKey1'
     const objKey2 = 'objKey2'
     let original!: any
@@ -125,18 +98,18 @@ describe('clsProxify', () => {
       proxy = {
         [objKey2]: Symbol(),
       }
-      proxified = clsProxify(clsKey, original)
+      proxified = clsProxify(original)
     })
 
     test('uses value from cls', () => {
-      clsProxifyNamespace.run(() => {
-        setClsProxyValue(clsKey, proxy)
+      getClsHookedStorage().namespace.run(() => {
+        getClsHookedStorage().set(proxy)
         expect(objKey2 in proxified).toBeTruthy()
         expect(objKey1 in proxified).toBeFalsy()
       })
     })
     test('falls back to original', () => {
-      clsProxifyNamespace.run(() => {
+      getClsHookedStorage().namespace.run(() => {
         expect(objKey1 in proxified).toBeTruthy()
         expect(objKey2 in proxified).toBeFalsy()
       })
@@ -144,7 +117,6 @@ describe('clsProxify', () => {
   })
 
   describe('ownKeys', () => {
-    const clsKey = 'test'
     let original!: any
     let proxy!: any
     let proxified!: any
@@ -158,18 +130,18 @@ describe('clsProxify', () => {
         objKey3: Symbol(),
         objKey4: Symbol(),
       }
-      proxified = clsProxify(clsKey, original)
+      proxified = clsProxify(original)
     })
 
     test('uses value from cls', () => {
-      clsProxifyNamespace.run(() => {
-        setClsProxyValue(clsKey, proxy)
+      getClsHookedStorage().namespace.run(() => {
+        getClsHookedStorage().set(proxy)
         expect(Object.keys(proxified)).toEqual(Object.keys(proxy))
         expect(Object.keys(proxified).length).toBe(3)
       })
     })
     test('falls back to original', () => {
-      clsProxifyNamespace.run(() => {
+      getClsHookedStorage().namespace.run(() => {
         expect(Object.keys(proxified)).toEqual(Object.keys(original))
         expect(Object.keys(proxified).length).toBe(2)
       })

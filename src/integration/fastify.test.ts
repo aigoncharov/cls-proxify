@@ -1,22 +1,21 @@
-import * as fastify from 'fastify'
+import fastify from 'fastify'
 
 import { clsProxify } from '../core'
-import { clsProxifyFastifyMiddleware } from './fastify'
+import { clsProxifyFastifyPlugin } from './fastify'
 
 describe('clsProxifyExpressMiddleware', () => {
   test('creates a proxy', async () => {
-    const clsKey = 'myProxy'
     const original = {
       prop: 123,
     }
-    const proxified = clsProxify(clsKey, original)
+    const proxified = clsProxify(original)
 
     const clsProxy: typeof original = {
       prop: 234,
     }
     const route = '/test'
     const app = fastify()
-    app.use(clsProxifyFastifyMiddleware(clsKey, () => clsProxy))
+    app.register(clsProxifyFastifyPlugin, { proxify: () => clsProxy })
     app.get(route, (req, res) => {
       res.send(proxified.prop)
     })

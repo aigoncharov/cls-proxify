@@ -1,23 +1,27 @@
-import { EventEmitter } from 'events'
-import { IncomingMessage, ServerResponse } from 'http'
+import { FastifyPluginCallback, FastifyReply, FastifyRequest } from 'fastify'
+import { name } from '../../package.json'
 
-import { clsProxifyNamespace, setClsProxyValue } from '../core'
+import { getClsHookedStorage } from '../cls'
 
-export type CreateClsProxyFastify<HttpRequest, HttpResponse> = (req: HttpRequest, response: HttpResponse) => any
-export const clsProxifyFastifyMiddleware = <
-  HttpRequest extends EventEmitter = IncomingMessage,
-  HttpResponse extends EventEmitter = ServerResponse
->(
-  clsKey: string,
-  createClsProxy: CreateClsProxyFastify<HttpRequest, HttpResponse>,
-) => (req: HttpRequest, res: HttpResponse, next: (err?: Error) => void) => {
-  clsProxifyNamespace.bindEmitter(req)
-  clsProxifyNamespace.bindEmitter(res)
+export type CreateClsProxyFastify = (req: FastifyRequest, reply: FastifyReply) => any
 
-  clsProxifyNamespace.run(() => {
-    const proxyValue = createClsProxy(req, res)
-    setClsProxyValue(clsKey, proxyValue)
+export const clsProxifyFastifyPlugin: FastifyPluginCallback<{ proxify: CreateClsProxyFastify }> = (
+  fastify,
+  { proxify },
+  next,
+) => {
+  fastify.addHook('onRequest', (request, reply, done) => {
+    getClsHookedStorage().namespace.bindEmitter(request.raw)
+    getClsHookedStorage().namespace.bindEmitter(reply.raw)
 
-    next()
+    getClsHookedStorage().namespace.run(() => {
+      const proxyValue = proxify(request, reply)
+      getClsHookedStorage().set(proxyValue)
+
+      done()
+    })
   })
+  next()
 }
+;(clsProxifyFastifyPlugin as any)[Symbol.for('skip-override')] = true
+;(clsProxifyFastifyPlugin as any)[Symbol.for('fastify.display-name')] = name
