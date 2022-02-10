@@ -1,6 +1,6 @@
 {
   "name": "cls-proxify",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Logging on steroids with CLS and Proxy. Integrated with express, koa, fastify.",
   "main": "index.js",
   "devDependencies": {
