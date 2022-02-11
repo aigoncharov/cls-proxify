@@ -110,7 +110,7 @@ app.use((ctx) => {
 
 ```ts
 import { clsProxify } from 'cls-proxify'
-import { clsProxifyFastifyMiddleware } from 'cls-proxify/integration/fastify'
+import { clsProxifyFastifyPlugin } from 'cls-proxify/integration/fastify'
 import * as fastify from 'fastify'
 
 const logger = {
@@ -119,8 +119,8 @@ const logger = {
 const loggerCls = clsProxify(logger)
 
 const app = fastify()
-app.use(
-  clsProxifyFastifyMiddleware((req) => {
+app.register(clsProxifyFastifyPlugin, {
+  proxify: (req) => {
     const headerRequestID = ctx.req.headers.Traceparent
     const loggerProxy = {
       info: (msg: string) => `${headerRequestID}: ${msg}`,
@@ -128,8 +128,8 @@ app.use(
     // this value will be accesible in CLS by key 'cls-proxify'
     // it will be used as a proxy for `loggerCls`
     return loggerProxy
-  }),
-)
+  },
+})
 
 app.get('/test', (req, res) => {
   loggerCls.info('My message!')
