@@ -13,6 +13,7 @@ Many thanks to [@mcollina](https://github.com/mcollina) for the idea of combinin
   - [Koa](#koa)
   - [Fastify](#fastify)
   - [Any other framework or library](#any-other-framework-or-library)
+  - [Set custom CLS storage](#set-custom-cls-storage)
 - [In depth](#in-depth)
   - [How it works](#how-it-works)
   - [Does it work only for loggers?](#does-it-work-only-for-loggers)
@@ -142,7 +143,7 @@ app.get('/test', (req, res) => {
 ### Any other framework or library
 
 ```ts
-import { clsProxify, clsProxifyNamespace } from 'cls-proxify'
+import { clsProxify, getClsHookedStorage } from 'cls-proxify'
 import AbstractWebServer from 'abstract-web-server'
 
 const logger = {
@@ -154,17 +155,17 @@ const app = new AbstractWebServer()
 // Assuming this AbstractWebServer supports some form of middlewares
 app.use((request, response, next) => {
   // Assuming your request and response are event emitters
-  clsProxifyNamespace.bindEmitter(request)
-  clsProxifyNamespace.bindEmitter(response)
+  getClsHookedStorage().namespace.bindEmitter(request)
+  getClsHookedStorage().namespace.bindEmitter(response)
 
-  clsProxifyNamespace.run(() => {
+  getClsHookedStorage().namespace.run(() => {
     const headerRequestID = request.headers.Traceparent
     // this value will be accesible in CLS by key 'cls-proxify'
     // it will be used as a proxy for `loggerCls`
     const loggerProxy = {
       info: (msg: string) => `${headerRequestID}: ${msg}`,
     }
-    setClsProxyValue(loggerProxy)
+    getClsHookedStorage().set(loggerProxy)
 
     next()
   })
@@ -177,6 +178,30 @@ app.get('/test', (req, res) => {
   // It's going to log '12345: My message!'
   // If it doesn't find anything in CLS by key 'cls-proxify' it uses the original `logger` and logs 'My message!'
 })
+```
+
+### Set custom CLS storage
+
+```ts
+import { clsProxify, setClsHookedStorage, ClsHookedStorage, ClsProxifyStorage } from 'cls-proxify'
+import AbstractWebServer from 'abstract-web-server'
+
+// You can subclass existing ClsHookedStorage
+class CustomClsStorage extends ClsHookedStorage {
+  // Override namespace
+  public readonly namespace = createNamespace('myNamespace')
+  // Or override CLS key
+  protected readonly key = 'yoda'
+}
+setClsHookedStorage(new CustomClsStorage())
+
+// Or you can implement your own storage from scratch.
+// Just make sure it conforms to `ClsProxifyStorage` interface.
+class SecretStorage<T> implements ClsProxifyStorage<T> {
+  set(proxy: T): void {}
+  get(): T | undefined {}
+}
+setClsHookedStorage(new SecretStorage())
 ```
 
 ## In depth

@@ -1,2 +1,2 @@
 export * from './core'
-export { setClsHookedStorage, ClsHookedStorage, ClsProxifyStorage } from './cls'
+export { getClsHookedStorage, setClsHookedStorage, ClsHookedStorage, ClsProxifyStorage } from './cls'
