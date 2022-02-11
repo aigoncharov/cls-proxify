@@ -42,14 +42,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/keenondrums/cls-proxify.git"
+    "url": "git+https://github.com/aigoncharov/cls-proxify.git"
   },
-  "author": "keenondrums (andrey.goncharov+it@protonmail.com)",
+  "author": "Andrey Goncharov (andrey@goncharov.page)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/keenondrums/cls-proxify/issues"
+    "url": "https://github.com/aigoncharov/cls-proxify/issues"
   },
-  "homepage": "https://github.com/keenondrums/cls-proxify#readme",
+  "homepage": "https://github.com/aigoncharov/cls-proxify#readme",
   "keywords": [
     "cls",
     "proxy",
