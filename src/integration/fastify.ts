@@ -1,6 +1,6 @@
 import { FastifyPluginCallback, FastifyReply, FastifyRequest } from 'fastify'
-import { name } from '../../package.json'
 
+import { pluginName } from '../consts'
 import { getClsHookedStorage } from '../cls'
 
 export type CreateClsProxyFastify = (req: FastifyRequest, reply: FastifyReply) => any
@@ -24,4 +24,4 @@ export const clsProxifyFastifyPlugin: FastifyPluginCallback<{ proxify: CreateCls
   next()
 }
 ;(clsProxifyFastifyPlugin as any)[Symbol.for('skip-override')] = true
-;(clsProxifyFastifyPlugin as any)[Symbol.for('fastify.display-name')] = name
+;(clsProxifyFastifyPlugin as any)[Symbol.for('fastify.display-name')] = pluginName
