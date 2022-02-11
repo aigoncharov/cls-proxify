@@ -3,7 +3,8 @@ node_modules
 /dist
 *.tgz
 /coverage
-src/**/*.js
+**/*.js
 *.d.ts
 /integration
 !jest.config.js
+!babel.config.js
